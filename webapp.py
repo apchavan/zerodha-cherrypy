@@ -12,16 +12,19 @@ import os
 
 webapp = Flask(__name__)
 
-# Configure hostname & port number of redis client for local environment.
+"""
+# Configure hostname & port number of redis client for local environment. Un-comment if need to run locally.
 HOST_NAME = 'localhost'
 PORT_NO = 6379
 DB_NO = 0
-
+"""
 
 @webapp.route("/")
 def index():
 	# Create a client of redis.
-	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
+	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')	# Un-comment if need to run locally.
+	
+	# Comment two lines below if need to run locally. Un-comment if required to run on heroku.
 	url = urlparse(os.environ.get('REDISCLOUD_URL'))
 	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 

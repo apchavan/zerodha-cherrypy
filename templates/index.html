@@ -71,11 +71,13 @@
 	
 	{% else %}
 	<center>
+		<div class="search_section">
 		<form method="post" style="margin-top: 50px;">
 			<input type="text" name="search_name_input_text" class="search_box" placeholder="Search name here..." 
 		required autocomplete="off" />
-			<button id="search_button" class="search_button"><span>Search</span></button>
+			<button id="search_button" class="search_button" onclick="toggle_search()"><span>Search</span></button>
 		</form>
+		</div>
 	</center>
 
 	<center>
@@ -132,6 +134,17 @@
 	<script src="{{ url_for('static',filename='bootstrap-3.3.0.min.js') }}"></script>
 	<script src="{{ url_for('static',filename='jquery-1.11.1.min.js') }}"></script>
 	<script src="{{ url_for('static',filename='TablePagination.js') }}"></script>
-
+	<script type="text/javascript">
+		function toggle_search(){
+		  el = document.querySelector('.search_section');
+		  
+		  if(el.style.visibility == 'hidden'){
+		      el.style.visibility = 'visible'
+		  }else{
+		     el.style.visibility = 'hidden'
+		  }
+		}
+	</script>
+	
 </body>
 </html>

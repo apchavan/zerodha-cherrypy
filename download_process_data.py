@@ -59,7 +59,7 @@ def download_process_data():
 	equity_df = pd.read_csv(csvfile_name, sep=',')
 
 	"""
-	# Configure hostname & port number of redis client for local environment.
+	# Configure hostname & port number of redis client for local environment. Un-comment if need to run locally.
 	HOST_NAME = 'localhost'
 	PORT_NO = 6379
 	DB_NO = 0
@@ -67,6 +67,8 @@ def download_process_data():
 	# Create a client of redis.
 	redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
 	"""
+
+	# Comment two lines below if need to run locally. Un-comment if required to run on heroku.
 	url = urlparse(os.environ.get('REDISCLOUD_URL'))
 	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
