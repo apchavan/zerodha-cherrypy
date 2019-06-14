@@ -48,24 +48,15 @@ def index():
 	return render_template('index.html', redis_list_dict=redis_list_dict)
 
 
-@webapp.route("/", methods=['POST', 'GET'])
+@webapp.route("/", methods=['POST'])
 def search_button_clicked():
-	if request.method == 'POST':
-		search_name = request.form['search_name_input_text']
-		return redirect(url_for('search_result', search_name=search_name))
-	elif request.method == 'GET':
-		search_name = request.args.get('search_name_input_text')
-		return redirect(url_for('search_result', search_name=search_name))
+	#if request.method == 'POST':
+	search_name = request.form['search_name_input_text']
+	return redirect(url_for('search_result', search_name=search_name))
+	#elif request.method == 'GET':
+	#	search_name = request.args.get('search_name_input_text')
+	#	return redirect(url_for('search_result', search_name=search_name))
 
-
-@webapp.route("/<string:search_name>", methods=['POST', 'GET'])
-def search_button_clicked_again(search_name=''):
-	if request.method == 'POST':
-		search_name = request.form['search_name_input_text']
-		return redirect(url_for('search_result', search_name=search_name))
-	elif request.method == 'GET':
-		search_name = request.args.get('search_name_input_text')
-		return redirect(url_for('search_result', search_name=search_name))
 
 @webapp.route("/<string:search_name>")
 def search_result(search_name=''):
