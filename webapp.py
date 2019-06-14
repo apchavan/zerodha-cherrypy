@@ -58,15 +58,11 @@ def search_button_clicked():
 		return redirect(url_for('search_result', search_name=search_name))
 
 
-@webapp.route("/<string:search_name>", methods=['POST', 'GET'])
+@webapp.route("/<string:search_name>", methods=['GET'])
 def search_button_clicked(search_name=''):
-	if request.method == 'POST':
-		search_name = request.form['search_name_input_text']
-		return redirect(url_for('search_result', search_name=search_name))
-	elif request.method == 'GET':
-		search_name = request.args.get('search_name_input_text')
-		return redirect(url_for('search_result', search_name=search_name))
-		
+	search_name = request.args.get('search_name_input_text')
+	return redirect(url_for('search_result', search_name=search_name))
+
 
 @webapp.route("/<string:search_name>")
 def search_result(search_name=''):
