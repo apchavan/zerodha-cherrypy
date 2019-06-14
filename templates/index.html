@@ -18,58 +18,6 @@
 
 	<br/>
 
-	{% if search_name %}
-	<center>
-		<div style="overflow-x:auto;">
-
-		{% if not redis_list_dict %}
-			<center><h1> No data found...</h1></center>
-
-		{% else %}
-		<h4>'<strong><i>{{ redis_list_dict|count }}</i></strong>' record(s) available ... </h4>
-		<div class="container">
-		<div class="row">
-			<div class="table-responsive">
-			<table id="pager" class="table table-hover">
-								
-				<thead>
-				  <tr style="background-color: #4CAF50; color: #FFFFFF; font-size: 18px;">
-					<th>Code</th>
-					<th>Name</th>
-					<th>Open</th>
-					<th>High</th>
-					<th>Low</th>
-					<th>Close</th>
-				  </tr>
-				</thead>
-				
-				<tbody id="myTable">
-				{% for list_dict_items in redis_list_dict %}
-				<tr>
-					<td>{{ list_dict_items.get('code', None) }}</td>
-					<td>{{ list_dict_items.get('name', None) }}</td>
-					<td>{{ list_dict_items.get('open', None) }}</td>
-					<td>{{ list_dict_items.get('high', None) }}</td>
-					<td>{{ list_dict_items.get('low', None) }}</td>
-					<td>{{ list_dict_items.get('close', None) }}</td>
-				</tr>
-				{% endfor %}
-				</tbody>
-			</table>
-
-			</div>
-
-			<div class="col-md-12 text-center">
-				<ul class="pagination pagination-lg pager" id="myPager"></ul>
-			</div>
-
-		</div>
-		</div>
-		{% endif %}
-		</div>
-	</center>
-	
-	{% else %}
 	<center>
 		<div class="search_section">
 		<form method="post" style="margin-top: 50px;">
@@ -129,22 +77,10 @@
 		{% endif %}
 		</div>
 	</center>
-	{% endif %}
 		
 	<script src="{{ url_for('static',filename='bootstrap-3.3.0.min.js') }}"></script>
 	<script src="{{ url_for('static',filename='jquery-1.11.1.min.js') }}"></script>
 	<script src="{{ url_for('static',filename='TablePagination.js') }}"></script>
-	<script type="text/javascript">
-		function toggle_search(){
-		  el = document.querySelector('.search_section');
-		  
-		  if(el.style.visibility == 'hidden'){
-		      el.style.visibility = 'visible'
-		  }else{
-		     el.style.visibility = 'hidden'
-		  }
-		}
-	</script>
 	
 </body>
 </html>
