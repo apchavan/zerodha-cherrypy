@@ -59,7 +59,7 @@ def search_button_clicked(search_name):
 		return redirect(url_for('search_result', search_name=search_name))
 
 
-@webapp.route("/<search_name>", defaults={'search_name': ''})
+@webapp.route("/<search_name>", defaults={'search_name': None})
 def search_result(search_name):
 	# Create a client of redis.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
