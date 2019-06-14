@@ -1,0 +1,84 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CherryPy Web App</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}"/>
+	<link href="{{ url_for('static',filename='bootstrap-3.3.0.min.css') }}" rel="stylesheet" id="bootstrap-css">
+	
+</head>
+<body>
+	
+	<div class="navbar">
+	  <a href="http://localhost:5000/"><strong style="font-size: 25px; font-style: italic;">CherryPy</strong></a>
+	</div>
+
+	<br/>
+
+	<center>
+		<form action="http://localhost:5000/" method="post" style="margin-top: 50px;">
+			<input type="text" name="search_name_input_text" class="search_box" placeholder="Search name here..." 
+		required autocomplete="off" />
+			<button id="search_button" class="search_button"><span>Search</span></button>
+		</form>
+	</center>
+
+	<center>
+		<div style="overflow-x:auto;">
+
+		{% if not redis_list_dict %}
+			<center><h1> No data found...</h1></center>
+
+		{% else %}
+		<h4>'<strong><i>{{ redis_list_dict|count }}</i></strong>' record(s) available ... </h4>
+		<div class="container">
+		<div class="row">
+			<div class="table-responsive">
+			<table id="pager" class="table table-hover">
+								
+				<thead>
+				  <tr style="background-color: #4CAF50; color: #FFFFFF; font-size: 18px;">
+					<th>Code</th>
+					<th>Name</th>
+					<th>Open</th>
+					<th>High</th>
+					<th>Low</th>
+					<th>Close</th>
+				  </tr>
+				</thead>
+				
+				<tbody id="myTable">
+				{% for list_dict_items in redis_list_dict %}
+				<tr>
+					<td>{{ list_dict_items.get('code', None) }}</td>
+					<td>{{ list_dict_items.get('name', None) }}</td>
+					<td>{{ list_dict_items.get('open', None) }}</td>
+					<td>{{ list_dict_items.get('high', None) }}</td>
+					<td>{{ list_dict_items.get('low', None) }}</td>
+					<td>{{ list_dict_items.get('close', None) }}</td>
+				</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+
+			</div>
+
+			<div class="col-md-12 text-center">
+				<ul class="pagination pagination-lg pager" id="myPager"></ul>
+			</div>
+
+		</div>
+		</div>
+		{% endif %}
+		</div>
+	</center>
+	
+	<script src="{{ url_for('static',filename='bootstrap-3.3.0.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='jquery-1.11.1.min.js') }}"></script>
+	<script src="{{ url_for('static',filename='TablePagination.js') }}"></script>
+
+</body>
+</html>
