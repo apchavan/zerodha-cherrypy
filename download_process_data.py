@@ -12,6 +12,8 @@ import zipfile
 import pandas as pd
 from datetime import date
 from pathlib import Path
+from urllib.parse import urlparse
+
 
 def download_process_data():
 	# Prepare date to get last day's data.
@@ -65,7 +67,9 @@ def download_process_data():
 	# Create a client of redis.
 	redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
 	"""
-	redis_client_obj = redis.from_url(url=os.environ['REDISCLOUD_URL'])
+	url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+
 	redis_client_obj.flushall()		# Delete all keys in all databases on the current host.
 	# redis_client_obj.flushdb()	# Delete all keys in the current database.
 

@@ -8,6 +8,8 @@ Author: Amey Prasannakumar Chavan
 from flask import Flask, render_template, redirect, url_for, request
 import redis
 import download_process_data
+from urllib.parse import urlparse
+
 
 webapp = Flask(__name__)
 
@@ -22,7 +24,9 @@ def index():
 	download_process_data.download_process_data()	# Get data and process it.
 	# Create a client of redis.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
-	redis_client_obj = redis.from_url(url=os.environ['REDISCLOUD_URL'])
+	url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+
 	redis_keys = redis_client_obj.keys(pattern=u'*')	# Get all existing keys in redis.
 	redis_keys = [decoded_str.decode(encoding='utf-8') for decoded_str in redis_keys]	# Decoded bytes to string.
 
