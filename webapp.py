@@ -49,7 +49,8 @@ def index():
 
 
 @webapp.route("/", methods=['POST', 'GET'])
-def search_button_clicked():
+@webapp.route("/<search_name>", methods=['POST', 'GET'])
+def search_button_clicked(search_name=None):
 	if request.method == 'POST':
 		search_name = request.form['search_name_input_text']
 		return redirect(url_for('search_result', search_name=search_name))
