@@ -7,7 +7,6 @@ Author: Amey Prasannakumar Chavan
 
 from flask import Flask, render_template, redirect, url_for, request
 import redis
-import download_process_data
 from urllib.parse import urlparse
 import os
 
@@ -21,7 +20,6 @@ DB_NO = 0
 
 @webapp.route("/")
 def index():
-	download_process_data.download_process_data()	# Get data and process it.
 	# Create a client of redis.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
 	url = urlparse(os.environ.get('REDISCLOUD_URL'))
