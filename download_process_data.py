@@ -63,14 +63,13 @@ def download_process_data():
 	HOST_NAME = 'localhost'
 	PORT_NO = 6379
 	DB_NO = 0
-
-	# Create a client of redis.
-	redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
 	"""
 
+	# Create a client of redis. Un-comment if need to run locally.
+	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
+	
 	# Comment two lines below if need to run locally. Un-comment if required to run on heroku.
-	url = urlparse(os.environ.get('REDISCLOUD_URL'))
-	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+	redis_client_obj = redis.from_url(url=os.environ['REDISCLOUD_URL'])
 
 	redis_client_obj.flushall()		# Delete all keys in all databases on the current host.
 	# redis_client_obj.flushdb()	# Delete all keys in the current database.

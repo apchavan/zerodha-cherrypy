@@ -10,6 +10,7 @@ import redis
 from urllib.parse import urlparse
 import os
 
+
 webapp = Flask(__name__)
 
 """
@@ -24,9 +25,10 @@ def index():
 	# Create a client of redis.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')	# Un-comment if need to run locally.
 	
-	# Comment two lines below if need to run locally. Un-comment if required to run on heroku.
-	url = urlparse(os.environ.get('REDISCLOUD_URL'))
-	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+	# Comment three lines below (upto 'redis_client_obj') if need to run locally. Un-comment if required to run on heroku.
+	# url = urlparse(os.environ.get('REDISCLOUD_URL'))
+	# redis_client_obj = redis.StrictRedis(host=url.hostname, port=url.port, password=url.password)
+	redis_client_obj = redis.from_url(url=os.environ['REDISCLOUD_URL'])
 
 	redis_keys = redis_client_obj.keys(pattern=u'*')	# Get all existing keys in redis.
 	redis_keys = [decoded_str.decode(encoding='utf-8') for decoded_str in redis_keys]	# Decoded bytes to string.
@@ -48,19 +50,19 @@ def index():
 	return render_template('index.html', redis_list_dict=redis_list_dict)
 
 
-@webapp.route("/", methods=['POST'])
+@webapp.route("/", methods=['POST', 'GET'])
 def search_button_clicked():
-	#if request.method == 'POST':
-	search_name = request.form['search_name_input_text']
-	return redirect(url_for('search_result', search_name=search_name))
-	#elif request.method == 'GET':
-	#	search_name = request.args.get('search_name_input_text')
-	#	return redirect(url_for('search_result', search_name=search_name))
+	if request.method == 'POST':
+		search_name = request.form['search_name_input_text']
+		return redirect(url_for('search_result', search_name=search_name))
+	elif request.method == 'GET':
+		search_name = request.args.get('search_name_input_text')
+		return redirect(url_for('search_result', search_name=search_name))
 
 
 @webapp.route("/<string:search_name>")
 def search_result(search_name=''):
-	# Create a client of redis.
+	# Create a client of redis. Un-comment if need to run locally.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
 	redis_client_obj = redis.from_url(url=os.environ['REDISCLOUD_URL'])
 	
