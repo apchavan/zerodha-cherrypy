@@ -48,9 +48,9 @@ def index():
 	return render_template('index.html', redis_list_dict=redis_list_dict)
 
 
-@webapp.route("/")
+@webapp.route("/", methods=['POST', 'GET'])
 @webapp.route("/<string:search_name>", methods=['POST', 'GET'])
-def search_button_clicked(search_name):
+def search_button_clicked(search_name=''):
 	if request.method == 'POST':
 		search_name = request.form['search_name_input_text']
 		return redirect(url_for('search_result', search_name=search_name))
@@ -59,7 +59,7 @@ def search_button_clicked(search_name):
 		return redirect(url_for('search_result', search_name=search_name))
 
 
-@webapp.route("/<search_name>")
+@webapp.route("/<string:search_name>")
 def search_result(search_name=''):
 	# Create a client of redis.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
