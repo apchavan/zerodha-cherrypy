@@ -1,1 +1,1 @@
-web: gunicorn webapp:webapp
+web: gunicorn webapp:webapp --timeout 10
