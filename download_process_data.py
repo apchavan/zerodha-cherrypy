@@ -67,7 +67,7 @@ def download_process_data():
 	# Create a client of redis.
 	redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
 	"""
-	url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+	url = urlparse(os.environ.get('REDISCLOUD_URL'))
 	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
 	redis_client_obj.flushall()		# Delete all keys in all databases on the current host.

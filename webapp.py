@@ -24,7 +24,7 @@ def index():
 	download_process_data.download_process_data()	# Get data and process it.
 	# Create a client of redis.
 	# redis_client_obj = redis.StrictRedis(host=HOST_NAME, port=PORT_NO, db=DB_NO, charset='utf-8')
-	url = urlparse.urlparse(os.environ.get('REDISCLOUD_URL'))
+	url = urlparse(os.environ.get('REDISCLOUD_URL'))
 	redis_client_obj = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
 	redis_keys = redis_client_obj.keys(pattern=u'*')	# Get all existing keys in redis.
